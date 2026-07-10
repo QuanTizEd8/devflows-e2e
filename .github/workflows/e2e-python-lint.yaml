@@ -1,0 +1,34 @@
+name: DevFlows cross-repo E2E (python-lint)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27 6 * * 1" # weekly, Monday 06:27 UTC
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  lint:
+    # Pinned to main during DevFlows' 0.x phase; switch to an exact release tag once tags exist.
+    uses: QuanTizEd8/DevFlows/.github/workflows/python-lint.yaml@main
+    with:
+      lint-working-directory: pkg
+      lint-enforce: true
+      typecheck-tool: mypy
+
+  assert:
+    needs: lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Assert lint outcome outputs
+        env:
+          LINT_OUTCOME: ${{ needs.lint.outputs.lint-outcome }}
+          RUFF_OUTCOME: ${{ needs.lint.outputs.ruff-check-outcome }}
+        run: |
+          test "$LINT_OUTCOME" = "success"
+          test "$RUFF_OUTCOME" = "success"
+          echo "Cross-repo python-lint verified (outcome=$LINT_OUTCOME)."

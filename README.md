@@ -12,5 +12,7 @@ It is maintained as part of the DevFlows project; it contains no product code.
 | Workflow | Consumes | Trigger |
 | --- | --- | --- |
 | `e2e-pandoc` | `pandoc.yaml@main` | manual dispatch + weekly schedule |
+| `e2e-python-lint` | `python-lint.yaml@main` | manual dispatch + weekly schedule |
+| `e2e-docs-build` | `docs-build.yaml@main` | manual dispatch + weekly schedule |
 
 More consumers are added as the DevFlows catalog grows.

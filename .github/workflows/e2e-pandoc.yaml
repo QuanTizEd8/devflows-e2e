@@ -45,6 +45,6 @@ jobs:
       - name: Assert HTML content
         run: |
           test -f result/example.html
-          grep -q "DevFlows cross-repo e2e heading" result/example.html
+          grep -q 'id="devflows-cross-repo-e2e-heading"' result/example.html
           grep -qi "<html" result/example.html
           echo "Cross-repo pandoc conversion verified."
